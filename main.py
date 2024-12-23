@@ -6,6 +6,7 @@ from utils.visualisation_V1_V2 import visualisation_V1_V2
 # Définir les chemins des fichiers
 input_file = 'data/creditcard.csv'
 output_file = 'data/reduced_creditcard.csv'
+output_image_V1_V2 = 'data/V1_V2.png'
 
 if __name__ == '__main__':
     # Vérifier si le fichier réduit existe déjà
@@ -26,7 +27,7 @@ if __name__ == '__main__':
     print(f"Transactions frauduleuses : {class_counts[1]}")
 
     #Visualisation des colonnes V1 et V2
-    visualisation_V1_V2(reduced_data)
+    visualisation_V1_V2(reduced_data, output_image_V1_V2)
 
 
 

@@ -55,7 +55,7 @@ Ce projet vise à détecter les fraudes dans un jeu de données de transactions 
 
 Le fichier **visualisation_V1_V2.py** génère un graphique de dispersion comme ci-dessous :
 
-![Graphique V1 vs V2](docs/images/scatter_v1_v2.png)
+![Graphique V1 vs V2](data/V1_V2.png)
 
 ---
 
