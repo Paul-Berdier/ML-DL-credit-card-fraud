@@ -25,6 +25,38 @@ Ce projet vise à détecter les fraudes dans un jeu de données de transactions 
 
 ---
 
+## Présentation du Dataset
+
+### 1. Intérêt personnel concernant la thématique
+Ayant été pris en alternance dans une société de sécurisation de produits, je souhaitais m'entraîner à détecter des fraudes avant mon début de poste prévu pour le 6 janvier 2025. Ce projet me permet d'explorer des techniques d'analyse et de modélisation pour la détection des fraudes, ce qui est directement lié à mon futur rôle.
+
+### 2. Contenu du dataset
+Le dataset utilisé provient de transactions par carte de crédit. Il contient :
+- **Colonnes** : 31 (28 colonnes anonymisées issues d'une PCA, 1 colonne 'Time', 1 colonne 'Amount' et 1 colonne 'Class').
+- **Classe cible** : 0 pour les transactions légitimes et 1 pour les transactions frauduleuses.
+
+### 3. Date de parution
+Ce dataset a été initialement publié sur Kaggle et est devenu une référence pour les projets de détection de fraudes.
+
+### 4. Nombre de lignes de données
+- **Dataset initial** : 284 807 lignes.
+- **Dataset réduit** : Environ 3 335 lignes après traitement (en gardant toutes les fraudes).
+
+### 5. Pertinence des dimensions
+- Les colonnes V1 à V28 proviennent d'une transformation PCA pour protéger la confidentialité.
+- Ces colonnes capturent des informations utiles sur les relations complexes dans les données.
+- Les colonnes 'Time' et 'Amount' ajoutent un contexte temporel et monétaire.
+
+### 6. Contexte d'utilisation
+Ce dataset est fréquemment utilisé dans les projets de détection d'anomalies et pour entraîner des modèles supervisés visant à distinguer des motifs frauduleux.
+
+### 7. Exploitation possible des résultats
+- Développement de modèles prédictifs pour détecter des fraudes en temps réel.
+- Amélioration des systèmes de sécurité pour prévenir les activités malveillantes.
+- Intégration dans des systèmes de surveillance automatique pour les transactions bancaires.
+
+---
+
 ## Consignes et Étapes du TP
 
 ### 1. Choix et Présentation du Dataset
