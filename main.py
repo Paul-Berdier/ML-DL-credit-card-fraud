@@ -2,6 +2,8 @@ import os
 import pandas as pd
 from scripts.cleanig_data_script import reduce_transaction, normalize_data, compute_statistics, correlation_matrix
 from scripts.visualisation_script import visualisation_V1_V2, visualisation_correlation_matrix
+from scripts.isolate_row_script import isolate_random_row
+from scripts.ml_model_script import train_ml_model
 
 # Définir les chemins des fichiers
 credit_card_data_file = 'data/creditcard.csv'
@@ -11,8 +13,14 @@ output_image_V1_V2 = 'data/V1_V2.png'
 output_image_corr = 'data/correlation_matrix.png'
 output_scaled_file = 'data/scaled_creditcard.csv'
 output_stats_file = 'docs/stats_summary.csv'
+isolated_row_file = 'data/isolated_row.csv'
+train_data_file = 'data/train_data.csv'
+ml_model_file = 'models/ml_model.pkl'
 
 if __name__ == '__main__':
+
+    ######################## NETTOYAGE ET REDUCTION DU DATASET #############################
+
     # Vérifier si le fichier réduit existe déjà
     if os.path.exists(reduced_data_file):
         print(f"Le fichier '{reduced_data_file}' existe déjà. Chargement des données...")
@@ -55,5 +63,22 @@ if __name__ == '__main__':
     print("Calcul des statistiques essentielles...")
     compute_statistics(output_scaled_file, output_stats_file)
     print(f"Statistiques essentielles sauvegardées sous : {output_stats_file}")
+
+    ##############################################################################
+
+    # Isoler une ligne pour la prédiction finale
+    print("Isolation d'une ligne pour la prédiction finale...")
+    isolate_random_row(output_scaled_file, train_data_file, isolated_row_file)
+    print(f"Ligne isolée sauvegardée sous : {isolated_row_file}")
+    print(f"Données d'entraînement mises à jour sous : {train_data_file}")
+
+    print("Traitement terminé. Les résultats sont disponibles dans les fichiers de sortie.")
+
+    ########################### MACHINE LEARNING ################################
+
+    # Entraîner un modèle de Machine Learning
+    print("Entraînement d'un modèle de Machine Learning...")
+    train_ml_model(train_data_file, ml_model_file)
+    print(f"Modèle ML sauvegardé sous : {ml_model_file}")
 
     print("Traitement terminé. Les résultats sont disponibles dans les fichiers de sortie.")

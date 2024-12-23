@@ -8,9 +8,8 @@ Ce projet vise à détecter les fraudes dans un jeu de données de transactions 
 ## Structure des fichiers
 
 1. **main.py**
-   - Script principal orchestrant l'ensemble des opérations : réduction des données, analyse et visualisation.
-   - Affiche le nombre de transactions légitimes et frauduleuses après traitement.
-   - Appelle les fonctions des autres modules pour la réduction, la normalisation et la visualisation.
+   - Script principal orchestrant l'ensemble des opérations : réduction des données, analyse, visualisation, entraînement d'un modèle ML et évaluation des performances.
+   - Affiche des détails sur les données et sauvegarde les résultats dans différents fichiers.
 
 2. **scripts/cleanig_data_script.py**
    - **Réduction des transactions** : Conserve 1 % des transactions non frauduleuses et toutes les transactions frauduleuses.
@@ -22,16 +21,28 @@ Ce projet vise à détecter les fraudes dans un jeu de données de transactions 
    - **Scatterplot (V1 vs V2)** : Visualise la distribution des transactions légitimes et frauduleuses.
    - **Matrice de corrélation** : Montre les relations entre les variables pour évaluer la pertinence des dimensions.
 
-4. **data/**
+4. **scripts/isolate_row_script.py**
+   - **Isolation d'une ligne aléatoire** : Sélectionne une ligne destinée à la prédiction finale et l'exclut des données d'entraînement.
+
+5. **scripts/ml_model_script.py**
+   - **Modèle Machine Learning** : Entraîne un modèle Random Forest sur les données réduites et normalisées.
+   - **Évaluation des performances** : Calcule la précision, affiche un rapport de classification et sauvegarde le modèle entraîné.
+
+6. **data/**
    - **creditcard.csv** : Dataset original contenant les transactions avant traitement.
    - **reduced_creditcard.csv** : Dataset réduit après suppression des lignes non pertinentes et conservation des fraudes.
    - **scaled_creditcard.csv** : Dataset normalisé pour garantir une échelle uniforme.
    - **correlation_matrix_creditcard.csv** : Matrice des corrélations calculée sur les données réduites.
    - **correlation_matrix.png** : ![Matrice de Corrélation](data/correlation_matrix.png)
    - **V1_V2.png** : ![Graphique V1 vs V2](data/V1_V2.png)
+   - **isolated_row.csv** : Ligne isolée pour la prédiction finale.
+   - **train_data.csv** : Données d'entraînement après suppression de la ligne isolée.
 
-5. **docs/**
+7. **docs/**
    - **stats_summary.csv** : Statistiques essentielles (moyennes, médianes, IQR) générées après normalisation.
+
+8. **models/**
+   - **ml_model.pkl** : Modèle Machine Learning entraîné et sauvegardé.
 
 ---
 
@@ -85,9 +96,14 @@ Ce dataset est fréquemment utilisé dans les projets de détection d'anomalies 
 - **Scatterplot** des variables principales.
 - **Matrice de corrélation** pour valider la pertinence des variables conservées.
 
-### 4. Prédictions et Modélisation
-- Préparation pour entraîner des modèles de Machine Learning et Deep Learning.
-- Optimisation des hyperparamètres et évaluation des performances.
+### 4. Isolation d'une Ligne pour la Prédiction Finale
+- Sélection d'une ligne aléatoire et suppression de celle-ci des données d'entraînement.
+- Utilisation de cette ligne comme donnée de test pour la prédiction.
+
+### 5. Modélisation Machine Learning
+- Entraînement d'un modèle Random Forest.
+- Optimisation des hyperparamètres et évaluation des performances (précision, rapport de classification).
+- Sauvegarde du modèle entraîné pour utilisation future.
 
 ---
 
@@ -97,7 +113,7 @@ Ce dataset est fréquemment utilisé dans les projets de détection d'anomalies 
 - Python 3.8+
 - Bibliothèques nécessaires :
   ```bash
-  pip install pandas numpy seaborn matplotlib scikit-learn
+  pip install pandas numpy seaborn matplotlib scikit-learn joblib
   ```
 
 ### Lancer le projet
@@ -112,6 +128,7 @@ python main.py
 - Dataset réduit : Environ 3 335 lignes (incluant toutes les fraudes).
 - Transactions légitimes et frauduleuses affichées dans la console.
 - Graphiques et statistiques sauvegardés pour analyse ultérieure.
+- Modèle Machine Learning entraîné et sauvegardé.
 
 ---
 
