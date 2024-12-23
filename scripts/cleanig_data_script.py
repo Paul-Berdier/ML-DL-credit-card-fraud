@@ -36,23 +36,23 @@ def reduce_transaction(input_file,output_file):
     # Sauvegarder le nouveau dataset
     reduced_data.to_csv(output_file, index=False)
 
-# Fonction pour réduire la dimensionnalité
-def reduce_dimensions(input_file, threshold=0.1):
-    # Charger le fichier CSV
-    data = pd.read_csv(input_file)
-
-    correlation_matrix = data.corr()
-    correlated_features = correlation_matrix['Class'][abs(correlation_matrix['Class']) > threshold].index.tolist()
-    return data[correlated_features]
-
 # Fonction pour normaliser les données
-def normalize_data(input_file):
-    # Charger le fichier CSV
+def normalize_data(input_file, output_file):
+    # Charger les données
     data = pd.read_csv(input_file)
 
+    # Séparer les features et la colonne cible 'Class'
+    features = data.drop(columns=['Class'])
+    target = data['Class']
+
+    # Appliquer la normalisation uniquement sur les features
     scaler = StandardScaler()
-    scaled_data = pd.DataFrame(scaler.fit_transform(data), columns=data.columns)
-    return scaled_data
+    scaled_features = pd.DataFrame(scaler.fit_transform(features), columns=features.columns)
+
+    # Réintégrer la colonne 'Class'
+    scaled_data = pd.concat([scaled_features, target], axis=1)
+    scaled_data.to_csv(output_file, index=False)
+
 
 # Fonction pour calculer des statistiques essentielles
 def compute_statistics(input_file, output_file):
@@ -63,4 +63,24 @@ def compute_statistics(input_file, output_file):
     stats['median'] = data.median()
     stats['IQR'] = stats['75%'] - stats['25%']
     stats.to_csv(output_file)
-    return stats
+
+def correlation_matrix(input_file, output_file, threshold=0.1):
+    # Recharger le fichier dataset réduit
+    data = pd.read_csv(input_file)
+
+    # Calculer la matrice de corrélation avec la variable cible 'Class'
+    correlation_matrix = data.corr()
+    correlations_with_class = correlation_matrix['Class'].sort_values(ascending=False)
+
+    # Identifier les variables avec une corrélation absolue > 0.1 (seuil)
+    important_features = correlations_with_class[abs(correlations_with_class) > threshold].index.tolist()
+
+    # Réduire la dimensionnalité en conservant uniquement les colonnes pertinentes
+    reduced_data = data[important_features]
+
+    # Sauvegarder le dataset réduit
+    reduced_data.to_csv(output_file, index=False)
+
+    # Afficher les résultats
+    print(important_features, reduced_data.shape)
+

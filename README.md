@@ -14,7 +14,7 @@ Ce projet vise à détecter les fraudes dans un jeu de données de transactions 
 
 2. **scripts/cleanig_data_script.py**
    - **Réduction des transactions** : Conserve 1 % des transactions non frauduleuses et toutes les transactions frauduleuses.
-   - **Réduction de dimensionnalité** : Sélectionne les colonnes les plus corrélées avec la variable cible.
+   - **Réduction de dimensionnalité** : Sélectionne les colonnes les plus corrélées avec la variable cible et réduit les dimensions inutiles.
    - **Normalisation des données** : Standardise les colonnes pour optimiser les modèles d'apprentissage.
    - **Statistiques essentielles** : Calcule la moyenne, l'écart-type, la médiane et l'IQR pour chaque variable.
 
@@ -24,13 +24,14 @@ Ce projet vise à détecter les fraudes dans un jeu de données de transactions 
 
 4. **data/**
    - **creditcard.csv** : Dataset original contenant les transactions avant traitement.
-   - **reduced_creditcard.csv** : Dataset réduit généré après exécution du script principal.
-   - **scaled_creditcard.csv** : Dataset normalisé.
+   - **reduced_creditcard.csv** : Dataset réduit après suppression des lignes non pertinentes et conservation des fraudes.
+   - **scaled_creditcard.csv** : Dataset normalisé pour garantir une échelle uniforme.
+   - **correlation_matrix_creditcard.csv** : Matrice des corrélations calculée sur les données réduites.
    - **correlation_matrix.png** : ![Matrice de Corrélation](data/correlation_matrix.png)
    - **V1_V2.png** : ![Graphique V1 vs V2](data/V1_V2.png)
 
 5. **docs/**
-   - **stats_summary.csv** : Statistiques essentielles générées par le script d'analyse.
+   - **stats_summary.csv** : Statistiques essentielles (moyennes, médianes, IQR) générées après normalisation.
 
 ---
 
@@ -71,6 +72,9 @@ Ce dataset est fréquemment utilisé dans les projets de détection d'anomalies 
 ### 1. Nettoyage et Préparation des Données
 - Suppression des valeurs extrêmes et standardisation des colonnes.
 - Réduction des transactions non frauduleuses pour équilibrer les classes.
+- Réduction de dimensionnalité en sélectionnant uniquement les colonnes corrélées.
+- Normalisation des données pour assurer une échelle uniforme.
+- Calcul des statistiques essentielles : moyenne, écart-type, médiane et IQR.
 
 ### 2. Analyse Exploratoire
 - Graphiques de dispersion sur les colonnes V1 et V2 pour observer la distribution des classes.
