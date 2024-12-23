@@ -26,8 +26,8 @@ Ce projet vise à détecter les fraudes dans un jeu de données de transactions 
    - **creditcard.csv** : Dataset original contenant les transactions avant traitement.
    - **reduced_creditcard.csv** : Dataset réduit généré après exécution du script principal.
    - **scaled_creditcard.csv** : Dataset normalisé.
-   - **correlation_matrix.png** : Image de la matrice de corrélation.
-   - **V1_V2.png** : Graphique de dispersion des variables V1 et V2.
+   - **correlation_matrix.png** : ![Matrice de Corrélation](data/correlation_matrix.png)
+   - **V1_V2.png** : ![Graphique V1 vs V2](data/V1_V2.png)
 
 5. **docs/**
    - **stats_summary.csv** : Statistiques essentielles générées par le script d'analyse.
