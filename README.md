@@ -8,20 +8,29 @@ Ce projet vise à détecter les fraudes dans un jeu de données de transactions 
 ## Structure des fichiers
 
 1. **main.py**
-   - Script principal orchestrant l'ensemble des opérations : réduction des données et visualisation.
+   - Script principal orchestrant l'ensemble des opérations : réduction des données, analyse et visualisation.
    - Affiche le nombre de transactions légitimes et frauduleuses après traitement.
-   - Appelle les fonctions des autres modules pour la réduction et la visualisation.
+   - Appelle les fonctions des autres modules pour la réduction, la normalisation et la visualisation.
 
-2. **reduce_transaction.py**
-   - Fonction pour réduire la taille du dataset en ne conservant que 1 % des transactions non frauduleuses tout en gardant toutes les transactions frauduleuses.
-   - Méthode basée sur la variance des colonnes pour sélectionner les lignes les plus variées.
+2. **scripts/cleanig_data_script.py**
+   - **Réduction des transactions** : Conserve 1 % des transactions non frauduleuses et toutes les transactions frauduleuses.
+   - **Réduction de dimensionnalité** : Sélectionne les colonnes les plus corrélées avec la variable cible.
+   - **Normalisation des données** : Standardise les colonnes pour optimiser les modèles d'apprentissage.
+   - **Statistiques essentielles** : Calcule la moyenne, l'écart-type, la médiane et l'IQR pour chaque variable.
 
-3. **visualisation_V1_V2.py**
-   - Script pour générer un graphique de dispersion (scatterplot) des colonnes V1 et V2, coloré en fonction des classes (légitime ou fraude).
+3. **scripts/visualisation_script.py**
+   - **Scatterplot (V1 vs V2)** : Visualise la distribution des transactions légitimes et frauduleuses.
+   - **Matrice de corrélation** : Montre les relations entre les variables pour évaluer la pertinence des dimensions.
 
 4. **data/**
    - **creditcard.csv** : Dataset original contenant les transactions avant traitement.
    - **reduced_creditcard.csv** : Dataset réduit généré après exécution du script principal.
+   - **scaled_creditcard.csv** : Dataset normalisé.
+   - **correlation_matrix.png** : Image de la matrice de corrélation.
+   - **V1_V2.png** : Graphique de dispersion des variables V1 et V2.
+
+5. **docs/**
+   - **stats_summary.csv** : Statistiques essentielles générées par le script d'analyse.
 
 ---
 
@@ -57,37 +66,24 @@ Ce dataset est fréquemment utilisé dans les projets de détection d'anomalies 
 
 ---
 
-## Consignes et Étapes du TP
+## Étapes du TP
 
-### 1. Choix et Présentation du Dataset
-- **Dataset** : "Credit Card Fraud Detection" (Kaggle).
-- **Nombre de lignes** : 284 807.
-- **Colonnes** : 31 (V1 à V28 issues d'une PCA, Time, Amount, Class).
-- **Type de problème** : Classification binaire (0 = légitime, 1 = fraude).
-
-### 2. Nettoyage et Préparation des Données
+### 1. Nettoyage et Préparation des Données
 - Suppression des valeurs extrêmes et standardisation des colonnes.
 - Réduction des transactions non frauduleuses pour équilibrer les classes.
 
-### 3. Analyse Exploratoire
+### 2. Analyse Exploratoire
 - Graphiques de dispersion sur les colonnes V1 et V2 pour observer la distribution des classes.
-- Calcul des statistiques descriptives.
+- Matrice de corrélation pour évaluer les relations entre les dimensions.
+- Calcul des statistiques essentielles.
 
-### 4. Modélisation et Apprentissage
+### 3. Visualisation des Résultats
+- **Scatterplot** des variables principales.
+- **Matrice de corrélation** pour valider la pertinence des variables conservées.
+
+### 4. Prédictions et Modélisation
 - Préparation pour entraîner des modèles de Machine Learning et Deep Learning.
 - Optimisation des hyperparamètres et évaluation des performances.
-
-### 5. Prédictions
-- Test sur une ligne isolée.
-- Comparaison des prédictions des modèles ML et DL.
-
----
-
-## Exemple de Graphique Généré
-
-Le fichier **visualisation_V1_V2.py** génère un graphique de dispersion comme ci-dessous :
-
-![Graphique V1 vs V2](data/V1_V2.png)
 
 ---
 
@@ -97,7 +93,7 @@ Le fichier **visualisation_V1_V2.py** génère un graphique de dispersion comme 
 - Python 3.8+
 - Bibliothèques nécessaires :
   ```bash
-  pip install pandas numpy seaborn matplotlib
+  pip install pandas numpy seaborn matplotlib scikit-learn
   ```
 
 ### Lancer le projet
@@ -110,8 +106,8 @@ python main.py
 ## Résultats obtenus
 - Dataset initial : 284 807 lignes.
 - Dataset réduit : Environ 3 335 lignes (incluant toutes les fraudes).
-- Transactions légitimes : Affichées dans la console.
-- Transactions frauduleuses : Affichées dans la console.
+- Transactions légitimes et frauduleuses affichées dans la console.
+- Graphiques et statistiques sauvegardés pour analyse ultérieure.
 
 ---
 
@@ -126,4 +122,3 @@ python main.py
 - **Nom** : Paul Berdier
 - **Formation** : Master 1 - Data Science et Intelligence Artificielle
 - **Année** : 2024/2025
-

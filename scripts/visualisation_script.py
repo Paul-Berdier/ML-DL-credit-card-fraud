@@ -11,5 +11,13 @@ def visualisation_V1_V2(input_data, output_image):
     else:
         print(f"Graphique sauvegardé sous : {output_image}")
         plt.savefig(output_image)
+    plt.show()
 
+# Fonction pour générer une matrice de corrélation
+def visualisation_correlation_matrix(data, output_image):
+    plt.figure(figsize=(12, 10))
+    correlation_matrix = data.corr()
+    sns.heatmap(correlation_matrix, cmap='coolwarm', annot=False, fmt='.2f')
+    plt.title('Matrice de corrélation des variables')
+    plt.savefig(output_image)
     plt.show()

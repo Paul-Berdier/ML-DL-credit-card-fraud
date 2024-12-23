@@ -1,5 +1,8 @@
-import numpy as np
 import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
 
 def reduce_transaction(input_file,output_file):
     # Charger le fichier CSV
@@ -33,6 +36,31 @@ def reduce_transaction(input_file,output_file):
     # Sauvegarder le nouveau dataset
     reduced_data.to_csv(output_file, index=False)
 
+# Fonction pour réduire la dimensionnalité
+def reduce_dimensions(input_file, threshold=0.1):
+    # Charger le fichier CSV
+    data = pd.read_csv(input_file)
 
+    correlation_matrix = data.corr()
+    correlated_features = correlation_matrix['Class'][abs(correlation_matrix['Class']) > threshold].index.tolist()
+    return data[correlated_features]
 
+# Fonction pour normaliser les données
+def normalize_data(input_file):
+    # Charger le fichier CSV
+    data = pd.read_csv(input_file)
 
+    scaler = StandardScaler()
+    scaled_data = pd.DataFrame(scaler.fit_transform(data), columns=data.columns)
+    return scaled_data
+
+# Fonction pour calculer des statistiques essentielles
+def compute_statistics(input_file, output_file):
+    # Charger le fichier CSV
+    data = pd.read_csv(input_file)
+
+    stats = data.describe().T
+    stats['median'] = data.median()
+    stats['IQR'] = stats['75%'] - stats['25%']
+    stats.to_csv(output_file)
+    return stats
