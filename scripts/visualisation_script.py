@@ -41,9 +41,9 @@ def plot_learning_curve(estimator, X_train, y_train, title, output_file):
     test_scores = []
 
     for train_size in train_sizes:
-        X_partial, _, y_partial, _ = train_test_split(
-            X_train, y_train, train_size=train_size, random_state=42
-        )
+        size = int(train_size * len(X_train))  # Ensure size is an integer
+        X_partial = X_train[:size]
+        y_partial = y_train[:size]
         estimator.fit(X_partial, y_partial)
         train_scores.append(accuracy_score(y_partial, estimator.predict(X_partial)))
         test_scores.append(accuracy_score(y_train, estimator.predict(X_train)))

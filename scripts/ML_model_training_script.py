@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import joblib
 
 # Fonction pour entraîner un modèle de Machine Learning avancé
-def train_ml_model(prepared_data_file, output_roc_curve, output_learning_curve, target_column='Class', output_model_file='model.joblib'):
+def train_ml_model(prepared_data_file, output_roc_curve, output_learning_curve, target_column='Class', output_model_file='model_ML.joblib'):
     """
     Train a Machine Learning model with multiple techniques and evaluate its performance.
 
