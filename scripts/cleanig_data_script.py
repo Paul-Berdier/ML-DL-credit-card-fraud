@@ -19,7 +19,8 @@ def reduce_transaction(input_file,output_file):
     variance_weights = non_fraud_data.drop(columns=['Class']).apply(lambda row: np.dot(row, variances), axis=1)
 
     # Ajouter cette mesure dans le dataset
-    non_fraud_data.loc[:, 'VarianceScore'] = variance_weights
+    non_fraud_data = non_fraud_data.copy()
+    non_fraud_data['VarianceScore'] = variance_weights
 
     # Trier les non frauduleuses par ordre décroissant de la mesure de variance
     non_fraud_sorted = non_fraud_data.sort_values(by='VarianceScore', ascending=False)
@@ -83,4 +84,42 @@ def correlation_matrix(input_file, output_file, threshold=0.1):
 
     # Afficher les résultats
     print(important_features, reduced_data.shape)
+
+def isolate_random_row(data_file, output_data_file, isolated_row_file, target_column='Class'):
+    """
+    Isoler une ligne aléatoire du dataset pour une prédiction finale.
+    La ligne isolée ne sera pas utilisée pour l'entraînement.
+
+    Parameters:
+        data_file (str): Chemin vers le fichier contenant les données originales.
+        output_data_file (str): Chemin pour sauvegarder le dataset sans la ligne isolée.
+        isolated_row_file (str): Chemin pour sauvegarder la ligne isolée.
+        target_column (str): Nom de la colonne cible (par défaut 'Class').
+
+    Returns:
+        None
+    """
+    print("Chargement des données...")
+    data = pd.read_csv(data_file)
+
+    # Vérifier que le dataset n'est pas vide
+    if data.empty:
+        raise ValueError("Le dataset est vide. Veuillez vérifier le fichier source.")
+
+    print("Isolation d'une ligne aléatoire...")
+    isolated_row = data.sample(n=1, random_state=42)
+
+    # Supprimer la ligne isolée du dataset
+    data = data.drop(isolated_row.index)
+
+    print(f"Ligne isolée : \n{isolated_row}")
+
+    # Sauvegarder la ligne isolée et le dataset restant
+    print("Sauvegarde de la ligne isolée et du dataset modifié...")
+    isolated_row.to_csv(isolated_row_file, index=False)
+    data.to_csv(output_data_file, index=False)
+
+    print(f"Dataset sans la ligne isolée sauvegardé sous : {output_data_file}")
+    print(f"Ligne isolée sauvegardée sous : {isolated_row_file}")
+
 
