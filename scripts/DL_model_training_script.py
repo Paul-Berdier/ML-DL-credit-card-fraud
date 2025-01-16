@@ -5,6 +5,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.models import load_model
 import matplotlib.pyplot as plt
 import joblib
 
@@ -61,7 +62,7 @@ def train_deep_learning_model(prepared_data_file, output_loss_curve, target_colu
 
     # Sauvegarder le modèle avec joblib
     print("Sauvegarde du modèle avec joblib...")
-    joblib.dump(model, output_model_file)
+    model.save(output_model_file)
     print(f"Modèle sauvegardé sous : {output_model_file}")
 
     # Évaluation du modèle
