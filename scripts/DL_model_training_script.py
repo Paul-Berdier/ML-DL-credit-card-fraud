@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import joblib
 
 # Fonction pour construire et entraîner un modèle de Deep Learning
-def train_deep_learning_model(prepared_data_file, target_column='Class', output_model_file='deep_model.pkl', output_learning_curve='docs/deep_learning_curve.png'):
+def train_deep_learning_model(prepared_data_file, output_loss_curve, target_column='Class', output_model_file='deep_model.pkl', output_learning_curve='docs/deep_learning_curve.png'):
     """
     Train a Deep Learning model using TensorFlow/Keras and evaluate its performance.
 
@@ -54,7 +54,7 @@ def train_deep_learning_model(prepared_data_file, target_column='Class', output_
     history = model.fit(
         X_train, y_train,
         validation_data=(X_test, y_test),
-        epochs=100,
+        epochs=50,
         batch_size=32,
         callbacks=[early_stopping]
     )
@@ -91,5 +91,5 @@ def train_deep_learning_model(prepared_data_file, target_column='Class', output_
     plt.legend()
     plt.title('Courbe d\'erreur - Loss')
     plt.grid()
-    plt.savefig('docs/deep_learning_loss_curve.png')
+    plt.savefig(output_loss_curve)
     plt.close()
