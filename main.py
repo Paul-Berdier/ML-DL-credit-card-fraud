@@ -41,15 +41,19 @@ def main():
         "7": "Entraîner un modèle Machine Learning",
         "8": "Entraîner un modèle Deep Learning",
         "9": "Effectuer une prédiction",
-        "10": "Tout exécuter"
     }
 
     for key, value in options.items():
         print(f"{key}. {value}")
 
-    choice = input(Fore.CYAN + "\nEntrez le numéro de l'option que vous souhaitez exécuter : " + Style.RESET_ALL)
+    choice = input(Fore.CYAN + "\nEntrez les numéros des étapes à exécuter (séparés par des virgules) ou appuyez sur Entrée pour tout exécuter : " + Style.RESET_ALL)
 
-    if choice == "1" or choice == "10":
+    if not choice:
+        choice = list(options.keys())
+    else:
+        choice = list(map(int, choice.split(',')))
+
+    if 1 in choice:
         if os.path.exists(reduced_data_file):
             display_message(f"Le fichier '{reduced_data_file}' existe déjà. Chargement des données...")
         else:
@@ -57,13 +61,13 @@ def main():
             reduce_transaction(credit_card_data_file, reduced_data_file)
             display_message("Réduction des transactions terminée.")
 
-    if choice == "2" or choice == "10":
+    if 2 in choice:
         display_message("Génération du graphique de dispersion (V1 vs V2)...")
         reduced_data = pd.read_csv(reduced_data_file)
         visualisation_V1_V2(reduced_data, output_image_V1_V2)
         display_message(f"Graphique enregistré sous : {output_image_V1_V2}")
 
-    if choice == "3" or choice == "10":
+    if 3 in choice:
         display_message("Génération de la matrice de corrélation...")
         reduced_data = pd.read_csv(reduced_data_file)
         visualisation_correlation_matrix(reduced_data, output_image_corr_before)
@@ -73,37 +77,34 @@ def main():
         visualisation_correlation_matrix(pd.read_csv(correlation_matrix_file), output_image_corr_after)
         display_message(f"Matrice de corrélation enregistrée sous : {output_image_corr_after}")
 
-    if choice == "4" or choice == "10":
+    if 4 in choice:
         display_message("Normalisation des données en cours...")
         normalize_data(correlation_matrix_file, output_scaled_file)
         display_message(f"Données normalisées et sauvegardées sous : {output_scaled_file}")
 
-    if choice == "5" or choice == "10":
+    if 5 in choice:
         display_message("Calcul des statistiques essentielles...")
         compute_statistics(output_scaled_file, output_stats_file)
         display_message(f"Statistiques essentielles sauvegardées sous : {output_stats_file}")
 
-    if choice == "6" or choice == "10":
+    if 6 in choice:
         display_message("Isolation d'une ligne aléatoire pour la prédiction finale...")
         isolate_random_row(output_scaled_file, reformed_data_file, isolated_row_file)
         display_message(f"Ligne isolée sauvegardée sous : {isolated_row_file}")
 
-    if choice == "7" or choice == "10":
+    if 7 in choice:
         display_message("Entraînement du modèle de Machine Learning...")
         train_ml_model(reformed_data_file, output_roc_curve, output_learning_curve, target_column='Class', output_model_file=ml_model_file)
         display_message(f"Modèle ML sauvegardé sous : {ml_model_file}")
 
-    if choice == "8" or choice == "10":
+    if 8 in choice:
         display_message("Entraînement du modèle Deep Learning...")
         train_deep_learning_model(reformed_data_file, output_loss_curve, target_column='Class', output_model_file=dl_model_file, output_learning_curve=dl_learning_curve)
         display_message(f"Modèle DL sauvegardé sous : {dl_model_file}")
 
-    if choice == "9" or choice == "10":
+    if 9 in choice:
         display_message("Effectuer une prédiction avec les modèles ML et DL...")
         perform_prediction(isolated_row_file, ml_model_file, dl_model_file)
-
-    if choice not in options.keys():
-        display_message("Option invalide. Veuillez relancer le programme.")
 
 if __name__ == '__main__':
     main()

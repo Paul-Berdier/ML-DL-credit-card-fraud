@@ -222,7 +222,6 @@ Ce dataset est couramment utilisé dans des projets de détection d'anomalies et
 
 ### Perspectives d'amélioration
 - Pour un projet futur, il serait pertinent d'utiliser un dataset plus équilibré ou contenant un plus grand nombre de transactions frauduleuses.
-- Intégrer des techniques de génération de données synthétiques, comme SMOTE, pour équilibrer les classes avant l'entraînement.
 - Tester les modèles sur des datasets plus complexes pour évaluer leur robustesse dans des scénarios réalistes.
 
 ---
