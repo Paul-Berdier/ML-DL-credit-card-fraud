@@ -54,7 +54,7 @@ def main():
             display_message(f"Le fichier '{reduced_data_file}' existe déjà. Chargement des données...")
         else:
             display_message("Réduction des transactions en cours...")
-            reduce_transaction(credit_card_data_file, reduced_data_file, pourcentage_reduction=0.1)
+            reduce_transaction(credit_card_data_file, reduced_data_file)
             display_message("Réduction des transactions terminée.")
 
     if choice == "2" or choice == "10":
