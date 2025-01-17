@@ -1,124 +1,176 @@
 # Projet de Détection de Fraude par Carte de Crédit
 
 ## Objectif du Projet
-Ce projet vise à détecter les fraudes dans un jeu de données de transactions par carte de crédit en utilisant des techniques de Machine Learning et Deep Learning. L'objectif est d'analyser les données, de réduire leur taille tout en conservant les informations critiques, et de visualiser des modèles pour améliorer la compréhension des comportements frauduleux.
+Ce projet vise à détecter les fraudes dans un jeu de données de transactions par carte de crédit en utilisant des techniques avancées de Machine Learning et Deep Learning. L'objectif est de :
+- Comprendre les comportements frauduleux.
+- Réduire et normaliser les données pour des modèles optimaux.
+- Visualiser et expliquer les relations dans les données.
+- Entraîner et évaluer des modèles pour une prédiction précise.
 
 ---
 
-## Structure des fichiers
+## Structure des fichiers et dossiers
+
+### Arborescence
+Voici l'organisation des fichiers et dossiers du projet :
+
+```
+.
+├── main.py                     # Script principal orchestrant toutes les étapes
+├── requirements.txt            # Liste des dépendances nécessaires
+├── scripts/                    # Contient tous les scripts de traitement et d'analyse
+│   ├── cleanig_data_script.py  # Préparation et nettoyage des données
+│   ├── visualisation_script.py # Visualisation des données et des résultats
+│   ├── ML_model_training_script.py # Entraînement des modèles ML
+│   ├── DL_model_training_script.py # Entraînement des modèles DL
+│   ├── prediction_script.py    # Script pour effectuer des prédictions
+├── data/                       # Dossier pour les fichiers de données (peut être vide au départ)
+│   ├── creditcard.csv          # Jeu de données initial
+│   ├── reduced_creditcard.csv  # Jeu de données réduit
+│   ├── scaled_creditcard.csv   # Jeu de données normalisé
+│   ├── reformed_creditcard.csv # Jeu de données sans la ligne isolée
+│   ├── isolated_row.csv        # Ligne isolée pour prédiction
+├── docs/                       # Dossier pour les graphiques et documents générés
+│   ├── correlation_matrix_before.png # Matrice de corrélation avant réduction
+│   ├── correlation_matrix_after.png  # Matrice de corrélation après réduction
+│   ├── V1_V2.png               # Scatterplot des variables V1 et V2
+│   ├── roc_curve.png           # Courbe ROC des modèles ML
+│   ├── learning_curve.png      # Courbes d'apprentissage des modèles ML
+│   ├── deep_learning_curve.png # Courbes d'apprentissage des modèles DL
+│   ├── loss_curve.png          # Courbe de perte pour DL
+├── models/                     # Dossier pour sauvegarder les modèles entraînés (vide au départ)
+│   ├── ml_model.joblib         # Modèle ML entraîné
+│   ├── deep_model.h5           # Modèle DL entraîné
+```
+
+---
+
+## Fonctionnalités et Scripts Associés
 
 1. **main.py**
-   - Script principal orchestrant l'ensemble des opérations : réduction des données, analyse et visualisation.
-   - Affiche le nombre de transactions légitimes et frauduleuses après traitement.
-   - Appelle les fonctions des autres modules pour la réduction, la normalisation et la visualisation.
+   - Coordonne les étapes principales : nettoyage, visualisation, modélisation et prédiction.
+   - Propose un menu interactif pour exécuter chaque étape.
 
 2. **scripts/cleanig_data_script.py**
-   - **Réduction des transactions** : Conserve 1 % des transactions non frauduleuses et toutes les transactions frauduleuses.
-   - **Réduction de dimensionnalité** : Sélectionne les colonnes les plus corrélées avec la variable cible et réduit les dimensions inutiles.
-   - **Normalisation des données** : Standardise les colonnes pour optimiser les modèles d'apprentissage.
-   - **Statistiques essentielles** : Calcule la moyenne, l'écart-type, la médiane et l'IQR pour chaque variable.
+   - Réduction des transactions : Conserve 1 % des transactions non frauduleuses et toutes les fraudes.
+   - Normalisation des données : Standardisation des colonnes pour uniformiser les échelles.
+   - Calcul des statistiques essentielles : Moyenne, écart-type, médiane, IQR.
+   - Isolation d'une ligne pour prédiction : Exclut une ligne aléatoire pour des tests indépendants.
 
 3. **scripts/visualisation_script.py**
-   - **Scatterplot (V1 vs V2)** : Visualise la distribution des transactions légitimes et frauduleuses.
-   - **Matrice de corrélation** : Montre les relations entre les variables pour évaluer la pertinence des dimensions.
+   - Visualisation V1 vs V2 : Analyse la distribution des classes (fraude ou non).
+   - Matrice de corrélation : Met en évidence les relations entre les variables.
+   - Courbes d'apprentissage : Montre les performances des modèles en fonction des données.
 
-4. **data/**
-   - **creditcard.csv** : Dataset original contenant les transactions avant traitement.
-   - **reduced_creditcard.csv** : Dataset réduit après suppression des lignes non pertinentes et conservation des fraudes.
-   - **scaled_creditcard.csv** : Dataset normalisé pour garantir une échelle uniforme.
-   - **correlation_matrix_creditcard.csv** : Matrice des corrélations calculée sur les données réduites.
-   - **correlation_matrix.png** : ![Matrice de Corrélation](data/correlation_matrix.png)
-   - **V1_V2.png** : ![Graphique V1 vs V2](data/V1_V2.png)
+4. **scripts/ML_model_training_script.py**
+   - Entraîne des modèles supervisés : Random Forest, Gradient Boosting, et Régression Logistique.
+     - **Random Forest** :
+       - Fonctionnement : Crée plusieurs arbres de décision entraînés sur des sous-ensembles aléatoires des données. Chaque arbre vote pour une classe, et la classe majoritaire est choisie.
+       - Formule mathématique :
+         \[
+         P(C_k) = \frac{1}{N} \sum_{i=1}^{N} P(C_k | T_i)
+         \]
+         où \( T_i \) est un arbre parmi les \( N \) arbres, et \( P(C_k | T_i) \) est la probabilité prédite par l'arbre pour la classe \( C_k \).
+       - Pourquoi ce choix ? : Très robuste, capable de gérer les données bruitées et les déséquilibres.
+     
+     - **Gradient Boosting** :
+       - Fonctionnement : Entraîne successivement des modèles faibles (arbres) pour corriger les erreurs des prédictions précédentes.
+       - Formule mathématique :
+         \[
+         F_m(x) = F_{m-1}(x) + \eta \cdot h_m(x)
+         \]
+         où \( F_m(x) \) est la prédiction au pas \( m \), \( h_m(x) \) est le nouvel arbre, et \( \eta \) est le taux d'apprentissage.
+       - Pourquoi ce choix ? : Capture des relations complexes et offre d'excellentes performances pour des datasets difficiles.
+     
+     - **Régression Logistique** :
+       - Fonctionnement : Prédit la probabilité qu'une observation appartienne à une classe donnée en utilisant une fonction sigmoïde :
+         \[
+         P(y=1 | x) = \frac{1}{1 + e^{-z}}, \quad \text{avec} \; z = w^T x + b
+         \]
+         où \( w \) est le vecteur de poids, \( x \) est le vecteur de caractéristiques, et \( b \) est le biais.
+       - Pourquoi ce choix ? : Simple, rapide, et efficace pour des données linéairement séparables.
 
-5. **docs/**
-   - **stats_summary.csv** : Statistiques essentielles (moyennes, médianes, IQR) générées après normalisation.
+   - Optimise les hyperparamètres avec GridSearchCV.
+     - Recherche systématique des meilleures combinaisons d'hyperparamètres pour chaque modèle.
+
+   - Combine les modèles via un VotingClassifier.
+     - Fonctionnement : Combine les prédictions de plusieurs modèles pour améliorer la robustesse.
+     - Formule mathématique (soft voting) :
+       \[
+       P(C_k) = \frac{1}{M} \sum_{m=1}^{M} P(C_k | M_m)
+       \]
+       où \( M_m \) est un modèle parmi les \( M \) modèles.
+
+   - Génère des courbes ROC et d'apprentissage.
+     - **Courbe ROC** :
+       - Montre la capacité du modèle à séparer les classes en traçant le Taux de Vrais Positifs (TPR) contre le Taux de Faux Positifs (FPR).
+       - Formule :
+         \[
+         TPR = \frac{TP}{TP + FN}, \quad FPR = \frac{FP}{FP + TN}
+         \]
+       - Pourquoi ce choix ? : Mesure l'efficacité globale et l'équilibre entre précision et rappel.
+
+5. **scripts/DL_model_training_script.py**
+   - Entraîne un modèle de Deep Learning avec Keras.
+     - Utilise plusieurs couches denses avec des fonctions d'activation ReLU et Sigmoid.
+     - Descente de gradient :
+       \[
+       w \leftarrow w - \eta \cdot \nabla J(w)
+       \]
+       où \( \eta \) est le taux d'apprentissage et \( J(w) \) la fonction de coût.
+
+   - Génère des courbes de précision et de perte.
+
+6. **scripts/prediction_script.py**
+   - Effectue une prédiction sur la ligne isolée.
+   - Compare les résultats des modèles ML et DL avec le label réel.
 
 ---
 
-## Présentation du Dataset
+## Résultats Obtenus
 
-### 1. Intérêt personnel concernant la thématique
-Ayant été pris en alternance dans une société de sécurisation de produits, je souhaitais m'entraîner à détecter des fraudes avant mon début de poste prévu pour le 6 janvier 2025. Ce projet me permet d'explorer des techniques d'analyse et de modélisation pour la détection des fraudes, ce qui est directement lié à mon futur rôle.
+- **Précision des modèles** :
+  - Machine Learning : AUC-ROC de 1.0 (Random Forest, Gradient Boosting, VotingClassifier).
+  - Deep Learning : Précision et AUC de 1.0 après optimisation.
 
-### 2. Contenu du dataset
-Le dataset utilisé provient de transactions par carte de crédit. Il contient :
-- **Colonnes** : 31 (28 colonnes anonymisées issues d'une PCA, 1 colonne 'Time', 1 colonne 'Amount' et 1 colonne 'Class').
-- **Classe cible** : 0 pour les transactions légitimes et 1 pour les transactions frauduleuses.
-
-### 3. Date de parution
-Ce dataset a été initialement publié sur Kaggle et est devenu une référence pour les projets de détection de fraudes.
-
-### 4. Nombre de lignes de données
-- **Dataset initial** : 284 807 lignes.
-- **Dataset réduit** : Environ 3 335 lignes après traitement (en gardant toutes les fraudes).
-
-### 5. Pertinence des dimensions
-- Les colonnes V1 à V28 proviennent d'une transformation PCA pour protéger la confidentialité.
-- Ces colonnes capturent des informations utiles sur les relations complexes dans les données.
-- Les colonnes 'Time' et 'Amount' ajoutent un contexte temporel et monétaire.
-
-### 6. Contexte d'utilisation
-Ce dataset est fréquemment utilisé dans les projets de détection d'anomalies et pour entraîner des modèles supervisés visant à distinguer des motifs frauduleux.
-
-### 7. Exploitation possible des résultats
-- Développement de modèles prédictifs pour détecter des fraudes en temps réel.
-- Amélioration des systèmes de sécurité pour prévenir les activités malveillantes.
-- Intégration dans des systèmes de surveillance automatique pour les transactions bancaires.
-
----
-
-## Étapes du TP
-
-### 1. Nettoyage et Préparation des Données
-- Suppression des valeurs extrêmes et standardisation des colonnes.
-- Réduction des transactions non frauduleuses pour équilibrer les classes.
-- Réduction de dimensionnalité en sélectionnant uniquement les colonnes corrélées.
-- Normalisation des données pour assurer une échelle uniforme.
-- Calcul des statistiques essentielles : moyenne, écart-type, médiane et IQR.
-
-### 2. Analyse Exploratoire
-- Graphiques de dispersion sur les colonnes V1 et V2 pour observer la distribution des classes.
-- Matrice de corrélation pour évaluer les relations entre les dimensions.
-- Calcul des statistiques essentielles.
-
-### 3. Visualisation des Résultats
-- **Scatterplot** des variables principales.
-- **Matrice de corrélation** pour valider la pertinence des variables conservées.
-
-### 4. Prédictions et Modélisation
-- Préparation pour entraîner des modèles de Machine Learning et Deep Learning.
-- Optimisation des hyperparamètres et évaluation des performances.
+- **Visualisations** :
+  - **Scatterplot des classes** (fraude vs non-fraude) :
+    ![Scatterplot](docs/V1_V2.png)
+  - **Matrice de corrélation avant réduction** :
+    ![Correlation Before](docs/correlation_matrix_before.png)
+  - **Matrice de corrélation après réduction** :
+    ![Correlation After](docs/correlation_matrix_after.png)
+  - **Courbe ROC** :
+    ![ROC Curve](docs/roc_curve.png)
+  - **Courbes d'apprentissage pour ML** :
+    ![Learning Curve](docs/learning_curve.png)
+  - **Courbes d'apprentissage pour DL** :
+    ![Deep Learning Curve](docs/deep_learning_curve.png)
+  - **Courbe de perte pour DL** :
+    ![Loss Curve](docs/loss_curve.png)
 
 ---
 
 ## Installation et Exécution
 
 ### Prérequis
-- Python 3.8+
+- Python 3.5 - 3.9 (pour tensorflow...)
 - Bibliothèques nécessaires :
   ```bash
-  pip install pandas numpy seaborn matplotlib scikit-learn
+  pip install -r requirements.txt
   ```
+- Création des différents dossiers (même vides) :
+  ```bash
+  mkdir data docs models
+  ```
+- Téléchargez le fichier `creditcard.csv` depuis [Kaggle - Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud?resource=download) et placez-le dans le dossier `data`.
 
-### Lancer le projet
-```bash
-python main.py
-```
-
----
-
-## Résultats obtenus
-- Dataset initial : 284 807 lignes.
-- Dataset réduit : Environ 3 335 lignes (incluant toutes les fraudes).
-- Transactions légitimes et frauduleuses affichées dans la console.
-- Graphiques et statistiques sauvegardés pour analyse ultérieure.
-
----
-
-## Notes supplémentaires
-- Ce projet peut être étendu avec des modèles d'apprentissage supervisé.
-- La visualisation peut être enrichie avec d'autres dimensions (ex. V3, V4).
-- Ajout potentiel d'un modèle de Deep Learning avec Keras/TensorFlow.
+### Exécuter le Projet
+1. Lancez le script principal :
+   ```bash
+   python main.py
+   ```
+2. Sélectionnez une option dans le menu interactif.
 
 ---
 
@@ -126,3 +178,4 @@ python main.py
 - **Nom** : Paul Berdier
 - **Formation** : Master 1 - Data Science et Intelligence Artificielle
 - **Année** : 2024/2025
+
