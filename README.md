@@ -67,27 +67,27 @@ Voici l'organisation des fichiers et dossiers du projet :
      - **Random Forest** :
        - Fonctionnement : Crée plusieurs arbres de décision entraînés sur des sous-ensembles aléatoires des données. Chaque arbre vote pour une classe, et la classe majoritaire est choisie.
        - Formule mathématique :
-         \[
-         P(C_k) = \frac{1}{N} \sum_{i=1}^{N} P(C_k | T_i)
-         \]
-         où \( T_i \) est un arbre parmi les \( N \) arbres, et \( P(C_k | T_i) \) est la probabilité prédite par l'arbre pour la classe \( C_k \).
+         ```plaintext
+         P(C_k) = (1 / N) * SUM_{i=1}^N P(C_k | T_i)
+         ```
+         où `T_i` est un arbre parmi les `N` arbres, et `P(C_k | T_i)` est la probabilité prédite par l'arbre pour la classe `C_k`.
        - Pourquoi ce choix ? : Très robuste, capable de gérer les données bruitées et les déséquilibres.
      
      - **Gradient Boosting** :
        - Fonctionnement : Entraîne successivement des modèles faibles (arbres) pour corriger les erreurs des prédictions précédentes.
        - Formule mathématique :
-         \[
-         F_m(x) = F_{m-1}(x) + \eta \cdot h_m(x)
-         \]
-         où \( F_m(x) \) est la prédiction au pas \( m \), \( h_m(x) \) est le nouvel arbre, et \( \eta \) est le taux d'apprentissage.
+         ```plaintext
+         F_m(x) = F_{m-1}(x) + η * h_m(x)
+         ```
+         où `F_m(x)` est la prédiction au pas `m`, `h_m(x)` est le nouvel arbre, et `η` est le taux d'apprentissage.
        - Pourquoi ce choix ? : Capture des relations complexes et offre d'excellentes performances pour des datasets difficiles.
      
      - **Régression Logistique** :
        - Fonctionnement : Prédit la probabilité qu'une observation appartienne à une classe donnée en utilisant une fonction sigmoïde :
-         \[
-         P(y=1 | x) = \frac{1}{1 + e^{-z}}, \quad \text{avec} \; z = w^T x + b
-         \]
-         où \( w \) est le vecteur de poids, \( x \) est le vecteur de caractéristiques, et \( b \) est le biais.
+         ```plaintext
+         P(y=1 | x) = 1 / (1 + e^(-z)), avec z = w^T * x + b
+         ```
+         où `w` est le vecteur de poids, `x` est le vecteur de caractéristiques, et `b` est le biais.
        - Pourquoi ce choix ? : Simple, rapide, et efficace pour des données linéairement séparables.
 
    - Optimise les hyperparamètres avec GridSearchCV.
@@ -96,28 +96,28 @@ Voici l'organisation des fichiers et dossiers du projet :
    - Combine les modèles via un VotingClassifier.
      - Fonctionnement : Combine les prédictions de plusieurs modèles pour améliorer la robustesse.
      - Formule mathématique (soft voting) :
-       \[
-       P(C_k) = \frac{1}{M} \sum_{m=1}^{M} P(C_k | M_m)
-       \]
-       où \( M_m \) est un modèle parmi les \( M \) modèles.
+       ```plaintext
+       P(C_k) = (1 / M) * SUM_{m=1}^M P(C_k | M_m)
+       ```
+       où `M_m` est un modèle parmi les `M` modèles.
 
    - Génère des courbes ROC et d'apprentissage.
      - **Courbe ROC** :
        - Montre la capacité du modèle à séparer les classes en traçant le Taux de Vrais Positifs (TPR) contre le Taux de Faux Positifs (FPR).
        - Formule :
-         \[
-         TPR = \frac{TP}{TP + FN}, \quad FPR = \frac{FP}{FP + TN}
-         \]
+         ```plaintext
+         TPR = TP / (TP + FN), FPR = FP / (FP + TN)
+         ```
        - Pourquoi ce choix ? : Mesure l'efficacité globale et l'équilibre entre précision et rappel.
 
 5. **scripts/DL_model_training_script.py**
    - Entraîne un modèle de Deep Learning avec Keras.
      - Utilise plusieurs couches denses avec des fonctions d'activation ReLU et Sigmoid.
      - Descente de gradient :
-       \[
-       w \leftarrow w - \eta \cdot \nabla J(w)
-       \]
-       où \( \eta \) est le taux d'apprentissage et \( J(w) \) la fonction de coût.
+       ```plaintext
+       w = w - η * ∇J(w)
+       ```
+       où `η` est le taux d'apprentissage et `J(w)` la fonction de coût.
 
    - Génère des courbes de précision et de perte.
 
