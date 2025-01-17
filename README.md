@@ -45,6 +45,40 @@ Voici l'organisation des fichiers et dossiers du projet :
 
 ---
 
+## Présentation du Dataset
+
+### Intérêt personnel concernant la thématique
+Étant actuellement en alternance dans une société spécialisée dans la sécurisation des produits, l'une de mes principales missions consiste à identifier les potentielles fraudes des utilisateurs et à les répertorier. Ce projet m'a permis de me familiariser avec les outils et les techniques nécessaires pour analyser les données transactionnelles, comprendre les motifs frauduleux, et entraîner des modèles prédictifs adaptés. Il constitue une excellente préparation pour mon poste et une opportunité de développer des compétences applicables dans un contexte professionnel.
+
+### Contenu
+Le dataset contient des informations sur les transactions par carte de crédit :
+- **Colonnes principales** : 31 colonnes (28 anonymisées via une PCA, 1 colonne 'Time', 1 colonne 'Amount', et 1 colonne 'Class').
+- **Classe cible ('Class')** :
+  - 0 : Transaction légitime.
+  - 1 : Transaction frauduleuse.
+
+### Date de parution
+Le dataset a été publié initialement sur Kaggle par l'Université Libre de Bruxelles (ULB).
+
+### Nombres de lignes de données
+- **Dataset initial** : 284 807 lignes.
+- **Après réduction** : Environ 667 lignes, dont toutes les fraudes sont conservées.
+
+### Pertinence des différentes dimensions
+- Les colonnes anonymisées (V1 à V28) proviennent d'une transformation PCA pour protéger la confidentialité des données.
+- Les colonnes 'Time' et 'Amount' apportent des informations temporelles et monétaires utiles pour la détection de motifs frauduleux.
+- Les relations entre ces colonnes sont explorées via une matrice de corrélation pour comprendre leur impact sur les fraudes.
+
+### Contexte d’utilisation
+Ce dataset est couramment utilisé dans des projets de détection d'anomalies et de fraudes. Il sert de référence pour tester et évaluer des modèles d'apprentissage supervisé dans un environnement contrôlé.
+
+### Exploitation possible des résultats des apprentissages
+- Développement de systèmes de détection de fraudes en temps réel.
+- Renforcement des mécanismes de sécurité dans les systèmes de paiement.
+- Réduction des pertes financières dues à des transactions frauduleuses.
+
+---
+
 ## Fonctionnalités et Scripts Associés
 
 1. **main.py**
