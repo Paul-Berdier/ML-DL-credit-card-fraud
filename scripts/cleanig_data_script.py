@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 
-def reduce_transaction(input_file,output_file):
+def reduce_transaction(input_file,output_file, pourcentage_reduction=0.01):
     # Charger le fichier CSV
     data = pd.read_csv(input_file)
 
@@ -26,7 +26,7 @@ def reduce_transaction(input_file,output_file):
     non_fraud_sorted = non_fraud_data.sort_values(by='VarianceScore', ascending=False)
 
     # Conserver seulement 1% des lignes les plus variées pour les non frauduleuses
-    reduced_non_fraud = non_fraud_sorted.head(int(len(non_fraud_data) * 0.01))
+    reduced_non_fraud = non_fraud_sorted.head(int(len(non_fraud_data) * pourcentage_reduction))
 
     # Supprimer la colonne 'VarianceScore'
     reduced_non_fraud = reduced_non_fraud.drop(columns=['VarianceScore'])

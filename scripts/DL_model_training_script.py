@@ -55,7 +55,7 @@ def train_deep_learning_model(prepared_data_file, output_loss_curve, target_colu
     history = model.fit(
         X_train, y_train,
         validation_data=(X_test, y_test),
-        epochs=50,
+        epochs=100,
         batch_size=32,
         callbacks=[early_stopping]
     )
