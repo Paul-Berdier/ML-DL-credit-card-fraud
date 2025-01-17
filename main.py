@@ -48,18 +48,25 @@ def main():
 
     choice = input(Fore.CYAN + "\nEntrez les numéros des étapes à exécuter (séparés par des virgules) ou appuyez sur Entrée pour tout exécuter : " + Style.RESET_ALL)
 
-    if not choice:
-        choice = list(options.keys())
+    if not choice.strip():
+        choice = list(map(int, options.keys()))
     else:
         choice = list(map(int, choice.split(',')))
 
     if 1 in choice:
-        if os.path.exists(reduced_data_file):
-            display_message(f"Le fichier '{reduced_data_file}' existe déjà. Chargement des données...")
-        else:
-            display_message("Réduction des transactions en cours...")
-            reduce_transaction(credit_card_data_file, reduced_data_file)
-            display_message("Réduction des transactions terminée.")
+        pourcentage_reduction = input(
+            "\nA combien de pourcents voulez-vous réduire les ligne non frauduleuse du dataset ? (entre 0 et 1 avec 0.01 de base) : ")
+        try:
+            pourcentage_reduction = float(pourcentage_reduction)  # Convertir en flottant
+            if not (0 < pourcentage_reduction <= 1):
+                raise ValueError("Le pourcentage doit être un nombre entre 0 et 1.")
+        except ValueError as e:
+            print(Fore.RED + "Erreur : " + str(e) + Style.RESET_ALL)
+            return  # Terminer le programme si l'entrée est invalide
+
+    display_message("Réduction des transactions en cours...")
+    reduce_transaction(credit_card_data_file, reduced_data_file, pourcentage_reduction)
+    display_message("Réduction des transactions terminée.")
 
     if 2 in choice:
         display_message("Génération du graphique de dispersion (V1 vs V2)...")

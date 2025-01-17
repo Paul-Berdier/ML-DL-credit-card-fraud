@@ -4,7 +4,18 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 
-def reduce_transaction(input_file,output_file, pourcentage_reduction=0.01):
+def reduce_transaction(input_file, output_file, pourcentage_reduction=0.01):
+    """
+    Réduit les transactions non frauduleuses selon un pourcentage donné tout en conservant toutes les fraudes.
+
+    Parameters:
+        input_file (str): Chemin vers le fichier CSV contenant les données d'origine.
+        output_file (str): Chemin pour sauvegarder les données réduites.
+        pourcentage_reduction (float): Pourcentage des transactions non frauduleuses à conserver (entre 0 et 1).
+
+    Returns:
+        None
+    """
     # Charger le fichier CSV
     data = pd.read_csv(input_file)
 
@@ -25,7 +36,7 @@ def reduce_transaction(input_file,output_file, pourcentage_reduction=0.01):
     # Trier les non frauduleuses par ordre décroissant de la mesure de variance
     non_fraud_sorted = non_fraud_data.sort_values(by='VarianceScore', ascending=False)
 
-    # Conserver seulement 1% des lignes les plus variées pour les non frauduleuses
+    # Conserver le pourcentage des lignes les plus variées pour les non frauduleuses
     reduced_non_fraud = non_fraud_sorted.head(int(len(non_fraud_data) * pourcentage_reduction))
 
     # Supprimer la colonne 'VarianceScore'
