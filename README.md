@@ -113,6 +113,8 @@ Voici l'organisation des fichiers et dossiers du projet :
 5. **scripts/DL_model_training_script.py**
    - Entraîne un modèle de Deep Learning avec Keras.
      - Utilise plusieurs couches denses avec des fonctions d'activation ReLU et Sigmoid.
+     ![fonction sigmoid](docs/sigmoid_graph.png)
+     ![fonction ReLu](docs/RELu_graph.png)
      - Descente de gradient :
        ```plaintext
        w = w - η * ∇J(w)
