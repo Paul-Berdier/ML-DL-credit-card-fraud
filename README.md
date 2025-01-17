@@ -174,6 +174,23 @@ Voici l'organisation des fichiers et dossiers du projet :
 
 ---
 
+## Conclusions
+
+### Points forts
+- Les modèles de Machine Learning et Deep Learning ont obtenu des scores de précision élevés, démontrant leur capacité à s'adapter aux données traitées.
+- Les courbes générées ont permis une bonne visualisation de la performance des modèles et de leur stabilité après optimisation des hyperparamètres.
+
+### Limitations
+- Le jeu de données initial contenait très peu de lignes représentant des transactions frauduleuses (98 sur 284 807). Après réduction, le dataset final contenait 667 lignes, ce qui a amplifié l'effet de déséquilibre des classes.
+- Les scores de précision extrêmement élevés dès le départ (AUC-ROC de 1.0) indiquent un risque de surapprentissage. Cela est dû à la faible diversité des données et à leur réduction drastique.
+
+### Perspectives d'amélioration
+- Pour un projet futur, il serait pertinent d'utiliser un dataset plus équilibré ou contenant un plus grand nombre de transactions frauduleuses.
+- Intégrer des techniques de génération de données synthétiques, comme SMOTE, pour équilibrer les classes avant l'entraînement.
+- Tester les modèles sur des datasets plus complexes pour évaluer leur robustesse dans des scénarios réalistes.
+
+---
+
 ## Auteurs
 - **Nom** : Paul Berdier
 - **Formation** : Master 1 - Data Science et Intelligence Artificielle
