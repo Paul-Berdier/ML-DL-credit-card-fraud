@@ -20,7 +20,7 @@ output_image_corr_after = 'docs/correlation_matrix_after.png'
 output_scaled_file = 'data/scaled_creditcard.csv'
 output_stats_file = 'data/stats_summary.csv'
 ml_model_file = 'models/ml_model.joblib'
-dl_model_file = 'models/deep_model.h5'
+dl_model_file = 'models/deep_model.keras'
 isolated_row_file = 'data/isolated_row.csv'
 output_roc_curve = 'docs/roc_curve.png'
 reformed_data_file = 'data/reformed_creditcard.csv'
@@ -64,9 +64,9 @@ def main():
             print(Fore.RED + "Erreur : " + str(e) + Style.RESET_ALL)
             return  # Terminer le programme si l'entrée est invalide
 
-    display_message("Réduction des transactions en cours...")
-    reduce_transaction(credit_card_data_file, reduced_data_file, pourcentage_reduction)
-    display_message("Réduction des transactions terminée.")
+        display_message("Réduction des transactions en cours...")
+        reduce_transaction(credit_card_data_file, reduced_data_file, pourcentage_reduction)
+        display_message("Réduction des transactions terminée.")
 
     if 2 in choice:
         display_message("Génération du graphique de dispersion (V1 vs V2)...")
